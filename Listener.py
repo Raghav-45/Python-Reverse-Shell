@@ -56,7 +56,7 @@ class Listener:
                 if command[0] == 'download' and '[-] Error ' not in result:
                     result = self.write_file(command[1], result)
             except Exception:
-                result = '[-] Error executing this Command.'
+                result = '[-] Error During Command Execution.'
             
             print(result)
             
