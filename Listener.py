@@ -60,5 +60,5 @@ class Listener:
             
             print(result)
             
-my_listener = Listener('10.38.1.110', 4444)
+my_listener = Listener('', 4444)
 my_listener.run()
