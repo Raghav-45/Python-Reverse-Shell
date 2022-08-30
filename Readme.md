@@ -1,4 +1,4 @@
 # Python-Reverse-Shell
 Using Sockets
 
-Currently works in Local Network
+Also Works Outside Local Area Network (Remote)
