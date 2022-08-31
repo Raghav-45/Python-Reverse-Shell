@@ -45,3 +45,17 @@ dist/ThiiiHumanRefl‮fdp.exe
 dist/TheHumanReflexe.pdf
 dist/Z_oldResearch-On-Human-Refl‮fdp.exe
 Thumbs.db
+*.toc
+build/RevShell/base_library.zip
+build/RevShell/localpycs/pyimod01_archive.pyc
+build/RevShell/localpycs/pyimod02_importers.pyc
+build/RevShell/localpycs/pyimod03_ctypes.pyc
+build/RevShell/localpycs/struct.pyc
+build/RevShell/PYZ-00.pyz
+build/RevShell/RevShell.exe.manifest
+build/RevShell/RevShell.pkg
+build/RevShell/warn-RevShell.txt
+build/RevShell/xref-RevShell.html
+dist/RevShell.exe
+Keylogger.py
+obfuscated.py
